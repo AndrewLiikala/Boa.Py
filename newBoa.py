@@ -92,14 +92,56 @@ class boa(object):
             b=b+1
         return gt  #Format of returned array looks like this [[[],[]],[[],[]]]
 
+    def getAllTags(self):
+        x = self.data
+        c = x.count('<') + 1
+        cc = c
+        d = x.count('>') + 1
+        e = 0
+        g = []
+        b = x
+        while e!=cc:
+            a = b.find('<')
+            b = b[a:]
+            c = b.find(' ')
+            d = b.find('>')
+            if d>c:
+                f = b[0:c] + '>'
+            else:
+                f = b[0:d + 1]
+            if '/' not in f and f!='':
+                if not f in g:
+                    g.append(f)
+            h = len(f)
+            b = b[h:]
+            e = e + 1
+        return g
+
+    def getAllTagLocations(self):
+        a = self.getAllTags()
+        b = len(a) - 1
+        c = 0
+        f = {}
+        while c!=b:
+            d = self.getTagLocations(a[c])
+            f[a[c]]=d
+            c = c + 1
+        return f
 
 test = '''<li class="expanded"><strong>Courses</strong><ul><li><a target="_top" href="/section/default.asp?id=201540%2D44584"><span>SPRING 2015 INTERNET/INTRANET DES & DEV (WDD121-007-44584 Yaeger)</span></a></li><li><a target="_top" href="/section/default.asp?id=201540%2D43381"><span>SPRING 2015 POLITICAL SCIENCE (PSC121-006-43381 Selegean-Dostal)</span></a></li><li><a target="_top" href="/section/default.asp?id=201540%2D43834"><span>SPRING 2015 PRECALCULUS (MTH135-007-43834 Terakedis)</span></a></li><li><a target="_top" href="/section/default.asp?id=201540%2D40553"><span>SPRING 2015 SCIENCE/ENERGY AND THE ENV (BIO126-006-40553 Kane-Sutton)</span></a></li><li><a target="_top" href="/section/default.asp?id=201540%2D40031"><span>SPRING 2015 TECHNICAL REPORT WRITING (ENG221-001-40031 O'Brien)</span></a></li></ul></li>'''
 x = boa(test)
-y = x.getTagLocations('<span>')
-a = len(y)
+y = x.getAllTagLocations()
+z = list(y.keys())
+print 'List of keys: ' + str(z)
+print 'Tag Locations Found For ' + str(z[0])
+c = y[z[0]]
+a = len(c)
 b = 0
 while b!=a:
-    print 'openingTagsFound: ' + test[y[b][0][0]:y[b][0][1]]
-    print 'closingTagsFound: ' + test[y[b][1][0]:y[b][1][1]]
+    print 'openingTagsFound: ' + test[c[b][0][0]:c[b][0][1]]
+    print 'closingTagsFound: ' + test[c[b][1][0]:c[b][1][1]]
     b = b + 1
-print 'Done'
+
+
+
+
