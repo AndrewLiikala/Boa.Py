@@ -5,7 +5,7 @@ class boa(object):
         #Plan To Include Another Module Version With MultiThreading
         self.data = string                       #Object storage of the string
 
-    def parseMarkupByTag(self,tag):         #Function returns a list that contains all of the locations in the string previously called of the tag called.
+    def getTagLocations(self,tag):          #Function returns a list that contains all of the locations of the called tag, each index of returned array is a grouping of an opening tag and it's closing tag
         ot = tag                            #Opening Tag
         otl = len(tag)                      #Length of Opening Tag
         otp = tag[0:otl-1] + ' '            #Incase the opening tag has parameters
@@ -36,7 +36,7 @@ class boa(object):
                     q = otl
                 else:
                     qq = z[a:]
-                    q = qq.find('>') + otl - 2
+                    q = qq.find('>') + 1
                 z = z[a+q:]
                 coords = []
                 coords.append(a + gv)
@@ -51,8 +51,6 @@ class boa(object):
             else:
                 del cti[-1]
             si = si + 1
-        print cti
-        print oti
         #Now oti is an array that contains smaller arrays, the first index of the smaller array is the index where the tag begins, and the second index is where the tag ends
         #Now cti is an array that contains smaller arrays, the first index of the smaller array is the index where the tag begins, and the second index is where the tag ends
         a = len(oti)
@@ -92,12 +90,12 @@ class boa(object):
                 gt.append(tg)
                 del sa[-1]
             b=b+1
-        return gt   #Format of returned array looks like this [[[],[]],[[],[]]]
+        return gt  #Format of returned array looks like this [[[],[]],[[],[]]]
 
 
 test = '''<li class="expanded"><strong>Courses</strong><ul><li><a target="_top" href="/section/default.asp?id=201540%2D44584"><span>SPRING 2015 INTERNET/INTRANET DES & DEV (WDD121-007-44584 Yaeger)</span></a></li><li><a target="_top" href="/section/default.asp?id=201540%2D43381"><span>SPRING 2015 POLITICAL SCIENCE (PSC121-006-43381 Selegean-Dostal)</span></a></li><li><a target="_top" href="/section/default.asp?id=201540%2D43834"><span>SPRING 2015 PRECALCULUS (MTH135-007-43834 Terakedis)</span></a></li><li><a target="_top" href="/section/default.asp?id=201540%2D40553"><span>SPRING 2015 SCIENCE/ENERGY AND THE ENV (BIO126-006-40553 Kane-Sutton)</span></a></li><li><a target="_top" href="/section/default.asp?id=201540%2D40031"><span>SPRING 2015 TECHNICAL REPORT WRITING (ENG221-001-40031 O'Brien)</span></a></li></ul></li>'''
 x = boa(test)
-y = x.parseMarkupByTag('<a>')
+y = x.getTagLocations('<span>')
 a = len(y)
 b = 0
 while b!=a:
