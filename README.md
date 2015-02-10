@@ -15,3 +15,4 @@ Basically writing in Python because of it's readability, I think it's great for 
   * This would be good for constructing scrapers, APIs, and possibly security
 3. Later I wish to make it very dynamic and utilize pattern-finding and association.
   * Since machine learning can be a bit complex, possibly a sister module.
+4. Make documentation.
